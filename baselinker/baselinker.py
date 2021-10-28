@@ -51,3 +51,11 @@ class Baselinker:
         or "marketplace_code" e.g. "ebay", "amazon", "ceneo", "emag", "allegro", etc.
         """
         return self._make_request('getOrderSources')
+
+    def get_order_transaction_details(self, order_id):
+        """
+              The method allows you to retrieve transaction details for a selected order (it now works only for orders from Amazon)
+        Keywords:
+            order_id (int): (optional) Order Identifier from BaseLinker order manager.
+        """
+        return self._make_request('getOrderTransactionDetails', order_id=order_id)
