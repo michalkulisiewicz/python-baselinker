@@ -17,9 +17,8 @@ class Baselinker:
             request_data['parameters'] = json.dumps(parameters)
         return request_data
 
-    def _make_request(self, method_name, parameters=None):
-        requests_data = self._get_request_data(method_name, parameters=None)
-
+    def _make_request(self, method_name, **kwargs):
+        requests_data = self._get_request_data(method_name, kwargs)
         try:
             with requests.Session() as s:
                 response = s.post(self.api_url, data=requests_data)
@@ -29,6 +28,7 @@ class Baselinker:
         except requests.RequestException as e:
             print(e)
             raise e
+
 
     def get_orders(self, order_id=None, date_confirmed_from=None, date_from=None, id_from=None, get_unconfirmed_orders=False, status_id=None, filter_email=None):
         """
