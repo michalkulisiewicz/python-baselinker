@@ -59,3 +59,11 @@ class Baselinker:
             order_id (int): (optional) Order Identifier from BaseLinker order manager.
         """
         return self._make_request('getOrderTransactionDetails', order_id=order_id)
+
+    def get_orders_by_email(self, email):
+        """
+              The method allows to search for orders related to the given e-mail address.
+        Keywords:
+            email (varchar(50): (required) The e-mail address we search for in orders.
+        """
+        return self._make_request('getOrdersByEmail', email=email)
