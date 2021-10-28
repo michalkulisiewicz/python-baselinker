@@ -29,8 +29,7 @@ class Baselinker:
             print(e)
             raise e
 
-
-    def get_orders(self, order_id=None, date_confirmed_from=None, date_from=None, id_from=None, get_unconfirmed_orders=False, status_id=None, filter_email=None):
+    def get_orders(self, **kwargs):
         """
         Method allows you to download orders from a specific date from the BaseLinker order manager.
         Keywords:
@@ -43,7 +42,7 @@ class Baselinker:
             status_id (int): (optional) The status identifier from which orders are to be collected. Leave blank to download orders from all statuses.
             filter_email varchar(50): (optional) Filtering of order lists by e-mail address (displays only orders with the given e-mail address).
         """
-        return self._make_request('getOrders')
+        return self._make_request('getOrders', **kwargs)
 
     def get_order_sources(self):
         """
