@@ -67,3 +67,11 @@ class Baselinker:
             email (varchar(50): (required) The e-mail address we search for in orders.
         """
         return self._make_request('getOrdersByEmail', email=email)
+
+    def get_orders_by_phone(self, phone):
+        """
+              The method allows you to search for orders related to the given phone number.
+        Keywords:
+            phone (varchar(50): (required) The phone number we search for in orders.
+        """
+        return self._make_request('getOrdersByPhone', phone=phone)
