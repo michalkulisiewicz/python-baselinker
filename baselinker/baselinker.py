@@ -45,4 +45,10 @@ class Baselinker:
         """
         return self._make_request('getOrders')
 
-
+    def get_order_sources(self):
+        """
+        The method returns types of order sources along with their IDs. Order sources are grouped by their type that
+        corresponds to a field order_source from the getOrders method. Available source types are "personal", "shop"
+        or "marketplace_code" e.g. "ebay", "amazon", "ceneo", "emag", "allegro", etc.
+        """
+        return self._make_request('getOrderSources')
