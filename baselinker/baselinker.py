@@ -213,3 +213,29 @@ class Baselinker:
                                   invoice_nip=invoice_nip, invoice_address=invoice_address, invoice_postcode=invoice_postcode, invoice_city=invoice_city, invoice_country_code=invoice_country_code,
                                   want_invoice=want_invoice, extra_field_1=extra_field_1, extra_field_2=extra_field_2, pick_state=pick_state, pack_state=pack_state)
 
+    def add_order_product(self, order_id=None, storage=None, storage_id=None,
+                          product_id=None, variant_id=None, auction_id=None,
+                          name=None, sku=None, ean=None, attributes=None,
+                          price_brutto=None, tax_rate=None, quantity=None, weight=None):
+        """
+             The method allows you to add a new product to your order.
+        Keywords:
+            order_id (int) Order Identifier from BaseLinker order manager
+            storage	varchar(9) Type of product source storage (available values: "db" - BaseLinker internal catalog, "shop" - online shop storage, "warehouse" - the connected wholesaler)
+            storage_id varchar(50) ID of the product source storage (one from BaseLinker catalogs or one of the stores connected to the account). Value "0" when the product comes from BaseLinker internal catalog.
+            product_id varchar(50) Product identifier in BaseLinker or shop storage. Blank if the product number is not known
+            variant_id varchar(30) Product variant ID. Blank if the variant number is unknown
+            auction_id varchar(20) Listing ID number (if the order comes from ebay/allegro)
+            name varchar(130) Product name
+            sku	varchar(40)	Product SKU number
+            ean	varchar(40)	Product EAN number
+            attributes varchar(150) The detailed product attributes, e.g. "Colour: blue" (Variant name)
+            price_brutto (float) Single item gross price
+            tax_rate (float) VAT rate
+            quantity (int) Number of pieces
+            weight (float) Single piece weight
+        """
+        return self._make_request('addOrderProduct', order_id=order_id, storage=storage, storage_id=storage_id,
+                                  product_id=product_id, variant_id=variant_id, auction_id=auction_id,
+                                  name=name, sku=sku, ean=ean, attributes=attributes,
+                                  price_brutto=price_brutto, tax_rate=tax_rate, quantity=quantity, weight=weight)
