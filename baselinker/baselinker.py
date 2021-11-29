@@ -89,3 +89,20 @@ class Baselinker:
             series_id (int): (required) Series numbering identifier
         """
         return self._make_request('addInvoice', order_id=order_id, series_id=series_id)
+
+    def get_invoices(self, invoice_id=None, order_id=None, date_from=None,
+                     id_from=None, series_id=None, get_external_invoices=None):
+        """
+              The method allows to issue an order invoice.
+        Keywords:
+            invoice_id (int): (optional) Invoice identifier. Completing this field will result in downloading
+            information about only one specific invoice.
+            order_id (int): (optional) Order identifier. Completing this field will result in downloading information
+            only about the invoice associated with this order (if the order has an invoice created).
+            date_from (int): (optional) Date from which invoices are to be collected. Unix time stamp format.
+            id_from	(int): (optional) The invoice ID number from which subsequent invoices are to be retrieved.
+            series_id (int): (optional) numbering series ID that allows filtering after the invoice numbering series.
+            get_external_invoices (bool): (optional, true by default) Download external invoices as well.
+        """
+        return self._make_request('getInvoices', invoice_id=invoice_id, order_id=order_id, date_from=date_from,
+                                  id_from=id_from, series_id=series_id, get_external_invoices=get_external_invoices)
