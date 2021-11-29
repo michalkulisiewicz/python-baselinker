@@ -93,7 +93,9 @@ class Baselinker:
     def get_invoices(self, invoice_id=None, order_id=None, date_from=None,
                      id_from=None, series_id=None, get_external_invoices=None):
         """
-              The method allows to issue an order invoice.
+              The method allows you to download invoices issued from the BaseLinker order manager.
+              The list of invoices can be limited using filters described in the method parameters.
+               Maximum 100 invoices are returned at a time.
         Keywords:
             invoice_id (int): (optional) Invoice identifier. Completing this field will result in downloading
             information about only one specific invoice.
