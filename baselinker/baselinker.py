@@ -121,3 +121,17 @@ class Baselinker:
         """
         return self._make_request('getOrderStatusList')
 
+    def get_order_payments_history(self, order_id=None, show_full_history=None):
+        """
+              The method allows you to retrieve payment history for a selected order,
+              including an external payment identifier from the payment gateway.
+              One order can have multiple payment history entries,caused by surcharges,
+              order value changes, manual payment editing
+        Keywords:
+            order_id (int): (required) Order Identifier from BaseLinker order manager.
+            show_full_history (bool): (optional, false by default) Download full payment history,
+            including order value change entries, manual order payment edits.
+            False by default - only returns entries containing an external payment identifier (most commonly used)
+        """
+
+        return self._make_request('getOrderPaymentsHistory', order_id=order_id, show_full_history=show_full_history)
