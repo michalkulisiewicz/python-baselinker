@@ -114,3 +114,10 @@ class Baselinker:
               The method allows to download a series of invoice/receipt numbering.
         """
         return self._make_request('getSeries')
+
+    def get_order_status_list(self):
+        """
+              The method allows you to download order statuses created by the customer in the BaseLinker order manager.
+        """
+        return self._make_request('getOrderStatusList')
+
