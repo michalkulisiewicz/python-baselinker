@@ -133,5 +133,19 @@ class Baselinker:
             including order value change entries, manual order payment edits.
             False by default - only returns entries containing an external payment identifier (most commonly used)
         """
-
         return self._make_request('getOrderPaymentsHistory', order_id=order_id, show_full_history=show_full_history)
+
+    def get_new_receipts(self, series_id=None):
+        """
+             The method allows you to retrieve receipts waiting to be issued.
+             This method should be used in creating integration with a fiscal printer.
+             The method can be requested for new receipts every e.g. 10 seconds.
+             If any receipts appear in response, they should be confirmed by the setOrderReceipt method
+             after printing to disappear from the waiting list.
+        Keywords:
+            series_id (int): (optional) The numbering series ID allows filtering by the receipt numbering series.
+            Using multiple series numbering for receipts is recommended when the user has multiple fiscal printers.
+            Each fiscal printer should have a separate series.
+        """
+        return self._make_request('getNewReceipts', series_id=series_id)
+
