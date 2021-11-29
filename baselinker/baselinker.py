@@ -277,3 +277,17 @@ class Baselinker:
             order_product_id (int): (required) Order item ID from BaseLinker order manager.
         """
         return self._make_request('deleteOrderProduct', order_id=order_id, order_product_id=order_product_id)
+
+    def set_order_payment(self, order_id, payment_done, payment_date, payment_comment):
+        """
+              The method allows you to add a payment to the order.
+        Keywords:
+            order_id (int): (required) Order ID number
+            payment_done (float): (required) The amount of the payment. The value changes the current payment in the order
+                                (not added to the previous value).
+                                If the amount matches the order value, the order will be marked as paid.
+            payment_date (int): (required) Payment date unixtime.
+            payment_comment varchar(30): (required) Payments commentary.
+        """
+        return self._make_request('setOrderPayment', order_id=order_id, payment_done=payment_done,
+                                  payment_date=payment_date, payment_comment=payment_comment)
