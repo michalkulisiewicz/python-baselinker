@@ -291,3 +291,12 @@ class Baselinker:
         """
         return self._make_request('setOrderPayment', order_id=order_id, payment_done=payment_done,
                                   payment_date=payment_date, payment_comment=payment_comment)
+
+    def set_order_status(self, order_id, status_id):
+        """
+              The method allows you to change order status.
+        Keywords:
+            order_id (int): (required) Order ID number
+            status_id (int): (required) Status ID number. The status list can be retrieved using getOrderStatusList.
+        """
+        return self._make_request('setOrderStatus', order_id=order_id, status_id=status_id)
