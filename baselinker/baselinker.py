@@ -108,3 +108,9 @@ class Baselinker:
         """
         return self._make_request('getInvoices', invoice_id=invoice_id, order_id=order_id, date_from=date_from,
                                   id_from=id_from, series_id=series_id, get_external_invoices=get_external_invoices)
+
+    def get_series(self):
+        """
+              The method allows to download a series of invoice/receipt numbering.
+        """
+        return self._make_request('getSeries')
