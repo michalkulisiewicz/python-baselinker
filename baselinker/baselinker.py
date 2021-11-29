@@ -300,3 +300,15 @@ class Baselinker:
             status_id (int): (required) Status ID number. The status list can be retrieved using getOrderStatusList.
         """
         return self._make_request('setOrderStatus', order_id=order_id, status_id=status_id)
+
+    def set_order_receipt(self, receipt_id, receipt_nr, date, printer_error=None):
+        """
+              The method allows you to mark orders with a receipt already issued.
+        Keywords:
+            receipt_id (int): (required) Receipt_id number received in the get_new_receipts method
+            receipt_nr varchar(20): (required) The number of the issued receipt (may be blank if the printer does not return the number)
+            date (int): (required) Receipt printing date (unixtime format)
+            printer_error (bool): Flag indicating whether an error occurred during receipt printing (false by default)
+        """
+        return self._make_request('setOrderReceipt', receipt_id=receipt_id, receipt_nr=receipt_nr,
+                                  date=date, printer_error=printer_error)
