@@ -11,17 +11,22 @@ class Baselinker:
 
     def _get_request_data(self, method_name, parameters=None):
         request_data = {}
-        request_data['token'] = self.api_token
         request_data['method'] = method_name
         if parameters:
             request_data['parameters'] = json.dumps(parameters)
         return request_data
 
+    def _get_request_headers(self):
+        headers = {}
+        headers['X-BLToken'] = self.api_token
+        return headers
+
     def _make_request(self, method_name, **kwargs):
         requests_data = self._get_request_data(method_name, kwargs)
+        headers = self._get_request_headers()
         try:
             with requests.Session() as s:
-                response = s.post(self.api_url, data=requests_data)
+                response = s.post(self.api_url, data=requests_data, headers=headers)
                 content = json.loads(response.content.decode("utf-8"))
                 return content
 
