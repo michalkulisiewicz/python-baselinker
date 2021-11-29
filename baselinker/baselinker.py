@@ -159,3 +159,57 @@ class Baselinker:
         """
         return self._make_request('getReceipt', receipt_id=receipt_id, order_id=order_id)
 
+    def set_order_fields(self, order_id=None, admin_comments=None, user_comments=None, payment_method=None,
+                       payment_method_cod=None, email=None, phone=None, user_login=None, delivery_method=None,
+                       delivery_price=None, delivery_fullname=None, delivery_company=None, delivery_address=None,
+                       delivery_postcode=None, delivery_city=None, delivery_country_code=None, delivery_point_id=None,
+                       delivery_point_name=None, delivery_point_address=None, delivery_point_postcode=None,
+                       delivery_point_city=None, invoice_fullname=None, invoice_company=None, invoice_nip=None,
+                       invoice_address=None, invoice_postcode=None, invoice_city=None, invoice_country_code=None,
+                       want_invoice=None, extra_field_1=None, extra_field_2=None, pick_state=None, pack_state=None):
+        """
+            The method allows you to edit selected fields (e.g. address data, notes, etc.) of a specific order.
+            Only the fields that you want to edit should be given, other fields can be omitted in the request.
+        Keywords:
+            admin_comments varchar(200) Seller comments
+            user_comments varchar(510) Buyer comments
+            payment_method varchar(30) Payment method
+            payment_method_cod (bool) Flag indicating whether the type of payment is COD (cash on delivery)
+            email varchar(150) Buyer e-mail address
+            phone varchar(100) Buyer phone number
+            user_login	varchar(30)	Buyer login
+            delivery_method	varchar(30)	Delivery method name
+            delivery_price	(float)	Gross delivery price
+            delivery_fullname varchar(100) Delivery address - name and surname
+            delivery_company varchar(100) Delivery address - company
+            delivery_address varchar(100) Delivery address - street and number
+            delivery_postcode varchar(100) Delivery address - postcode
+            delivery_city varchar(100) Delivery address - city
+            delivery_country_code char(2) Delivery address - country code (two-letter, e.g. EN)
+            delivery_point_id varchar(40) Pick-up point delivery - pick-up point identifier
+            delivery_point_name varchar(100) Pick-up point delivery - pick-up point name
+            delivery_point_address varchar(100)	Pick-up point delivery - pick-up point address
+            delivery_point_postcode varchar(100) Pick-up point delivery - pick-up point postcode
+            delivery_point_city varchar(100) Pick-up point delivery - pick-up point city
+            invoice_fullname varchar(100) Billing details - name and surname
+            invoice_company varchar(100) Billing details - company
+            invoice_nip varchar(100) Billing details - Vat Reg. no./tax number
+            invoice_address varchar(100) Billing details - street and house number
+            invoice_postcode varchar(100) Billing details - postcode
+            invoice_city varchar(100) Billing details - city
+            invoice_country_code char(2) Billing details - country code (two-letter, e.g. EN)
+            want_invoice (bool)	Flag indicating whether the customer wants an invoice (1 - yes, 0 - no)
+            extra_field_1 varchar(50) Value from "extra field 1". - the seller can store any information there
+            extra_field_2 varchar(50) Value from "extra field 2". - the seller can store any information there
+            pick_state (int) Flag indicating the status of the order products collection (1 - all products have been collected, 0 - not all products have been collected)
+            pack_state (int) Flag indicating the status of the order products packing (1 - all products have been packed, 0 - not all products have been packed)
+        """
+        return self._make_request('setOrderFields', order_id=order_id, admin_comments=admin_comments, user_comments=user_comments,
+                                  payment_method=payment_method, payment_method_cod=payment_method_cod, email=email, phone=phone, user_login=user_login,
+                                  delivery_method=delivery_method, delivery_price=delivery_price, delivery_fullname=delivery_fullname, delivery_company=delivery_company,
+                                  delivery_address=delivery_address, delivery_postcode=delivery_postcode, delivery_city=delivery_city, delivery_country_code=delivery_country_code,
+                                  delivery_point_id=delivery_point_id, delivery_point_name=delivery_point_name, delivery_point_address=delivery_point_address,
+                                  delivery_point_postcode=delivery_point_postcode, delivery_point_city=delivery_point_city, invoice_fullname=invoice_fullname, invoice_company=invoice_company,
+                                  invoice_nip=invoice_nip, invoice_address=invoice_address, invoice_postcode=invoice_postcode, invoice_city=invoice_city, invoice_country_code=invoice_country_code,
+                                  want_invoice=want_invoice, extra_field_1=extra_field_1, extra_field_2=extra_field_2, pick_state=pick_state, pack_state=pack_state)
+
