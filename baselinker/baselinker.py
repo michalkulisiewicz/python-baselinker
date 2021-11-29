@@ -149,3 +149,13 @@ class Baselinker:
         """
         return self._make_request('getNewReceipts', series_id=series_id)
 
+    def get_receipt(self, receipt_id=None, order_id=None):
+        """
+            The method allows you to retrieve a single receipt from the BaseLinker order manager.
+            To retrieve a list of new receipts (when integrating a fiscal printer), use the getNewReceipts method.
+        Keywords:
+            receipt_id (int): Receipt ID. Not required if order_id is provided.
+            order_id (int): Order ID. Not required if receipt_id is provided.
+        """
+        return self._make_request('getReceipt', receipt_id=receipt_id, order_id=order_id)
+
