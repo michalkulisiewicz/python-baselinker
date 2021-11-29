@@ -268,3 +268,12 @@ class Baselinker:
                                   storage=storage, storage_id=storage_id, product_id=product_id, variant_id=variant_id,
                                   auction_id=auction_id, name=name, sku=sku, ean=ean, attributes=attributes,
                                   price_brutto=price_brutto, tax_rate=tax_rate, quantity=quantity, weight=weight)
+
+    def delete_order_product(self, order_id, order_product_id):
+        """
+              The method allows you to remove a specific product from the order.
+        Keywords:
+            order_id (int): (required) Order Identifier from BaseLinker order manager.
+            order_product_id (int): (required) Order item ID from BaseLinker order manager.
+        """
+        return self._make_request('deleteOrderProduct', order_id=order_id, order_product_id=order_product_id)
