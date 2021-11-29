@@ -312,3 +312,15 @@ class Baselinker:
         """
         return self._make_request('setOrderReceipt', receipt_id=receipt_id, receipt_nr=receipt_nr,
                                   date=date, printer_error=printer_error)
+
+    def add_order_invoice_file(self, invoice_id, file, external_invoice_number):
+        """
+              The method allows you to mark orders with a receipt already issued.
+        Keywords:
+            invoice_id (int): (required) BaseLinker invoice identifier
+            file (text): (required) Invoice PDF file in binary format encoded in base64,
+            at the very beginning of the invoice string provide a prefix "data:" e.g. "data:4AAQSkSzkJRgABA[...]"
+            external_invoice_number varchar(30): (required) External system invoice number (overwrites BaseLinker invoice number)
+        """
+        return self._make_request('addOrderInvoiceFile', invoice_id=invoice_id, file=file,
+                                  external_invoice_number=external_invoice_number)
