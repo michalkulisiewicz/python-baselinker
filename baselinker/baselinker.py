@@ -80,3 +80,12 @@ class Baselinker:
             phone (varchar(50): (required) The phone number we search for in orders.
         """
         return self._make_request('getOrdersByPhone', phone=phone)
+
+    def add_invoice(self, order_id, series_id):
+        """
+              The method allows to issue an order invoice.
+        Keywords:
+            order_id (int): (required) Order Identifier from BaseLinker order manager.
+            series_id (int): (required) Series numbering identifier
+        """
+        return self._make_request('addInvoice', order_id=order_id, series_id=series_id)
