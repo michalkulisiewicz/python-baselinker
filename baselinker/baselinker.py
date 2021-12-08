@@ -360,3 +360,13 @@ class Baselinker:
         """
         return self._make_request('getExternalStorageCategories', storage_id=storage_id)
 
+    def get_external_storage_products_data(self, storage_id, products):
+        """
+              The method allows you to retrieve a category list from an external storage (shop/wholesale)
+              connected to BaseLinker.
+        Keywords:
+            storage_id varchar(30): (required) Storage ID in format "[type:shop|warehouse]_[id:int]" (e.g. "shop_2445").
+            products array: (required) An array of product ID numbers to download
+        """
+        return self._make_request('getExternalStorageProductsData', storage_id=storage_id, products=products)
+
