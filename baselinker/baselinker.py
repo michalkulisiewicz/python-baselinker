@@ -667,8 +667,15 @@ class Baselinker:
                                   filter_price_to=filter_price_to, filter_stock_from=filter_stock_from,
                                   page=page, filter_sort=filter_sort)
 
-
-
+    def get_inventory_products_stock(self, inventory_id, page):
+        """
+         The method allows you to retrieve detailed data for selected products from the BaseLinker catalogue.
+        Keywords:
+            inventory_id int: (required) Catalog ID. The list of identifiers can be retrieved
+            by the get_inventories method
+            page int (optional) Results paging (1000 products per page for BaseLinker warehouse)
+        """
+        return self._make_request('getInventoryProductsStock', inventory_id=inventory_id, page=page)
 
 
 
