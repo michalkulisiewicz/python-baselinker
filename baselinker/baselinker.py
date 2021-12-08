@@ -432,3 +432,18 @@ class Baselinker:
             2 => Stock quantity (int)
         """
         return self._make_request('updateExternalStorageProductsQuantity', storage_id=storage_id, products=products)
+
+    def add_inventory_price_group(self, price_group_id, name, description, currency):
+        """
+             The method allows to create a price group in BaseLinker storage.
+             Providing a price group ID will update the existing price group.
+             Such price groups may be later assigned in addInventory method.
+        Keywords:
+            price_group_id int: (required) Price group identifier
+            name varchar(100): (required) Name of the price group
+            description text: (required) Price group description
+            currency char(3): (required) 3-letter currency symbol e.g. PLN, EUR
+        """
+        return self._make_request('addInventoryPriceGroup', price_group_id=price_group_id, name=name,
+                                  description=description, currency=currency)
+
