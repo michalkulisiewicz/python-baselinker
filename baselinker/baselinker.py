@@ -584,6 +584,14 @@ class Baselinker:
         """
         return self._make_request('addInventoryManufacturer', manufacturer_id=manufacturer_id, name=name)
 
+    def delete_inventory_manufacturer(self, manufacturer_id):
+        """
+         The method allows you to remove manufacturer from BaseLinker catalog
+        Keywords:
+            manufacturer_id int: (required) The ID of the manufacturer removed from BaseLinker warehouse.
+        """
+        return self._make_request('deleteInventoryManufacturer', manufacturer_id=manufacturer_id)
+
 
 
 
