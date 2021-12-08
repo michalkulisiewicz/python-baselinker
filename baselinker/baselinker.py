@@ -632,7 +632,7 @@ class Baselinker:
         """
         return self._make_request('deleteInventoryProduct', product_id=product_id)
 
-    def get_inventory_products_data(self, inventory_id):
+    def get_inventory_products_data(self, inventory_id, products):
         """
          The method allows you to retrieve detailed data for selected products from the BaseLinker catalogue.
         Keywords:
@@ -640,7 +640,7 @@ class Baselinker:
             by the get_inventories method (inventory_id field).
             products array (required) An array of product ID numbers to download
         """
-        return self._make_request('getInventoryProductsData', inventory_id=inventory_id)
+        return self._make_request('getInventoryProductsData', inventory_id=inventory_id, products=products)
 
 
 
