@@ -487,3 +487,15 @@ class Baselinker:
             warehouse_id int: (required) ID of the warehouse
         """
         return self._make_request('deleteInventoryWarehouse', warehouse_id=warehouse_id)
+
+    def get_inventory_warehouses(self):
+        """
+        The method allows you to retrieve a list of warehouses available in BaseLinker catalogues.
+        The method also returns information about the warehouses created automatically
+        for the purpose of keeping external stocks (shops, wholesalers etc.)
+        """
+        return self._make_request('getInventoryWarehouses')
+
+
+
+
