@@ -461,4 +461,20 @@ class Baselinker:
         """
         return self._make_request('getInventoryPriceGroups')
 
+    def add_inventory_warehouse(self, warehouse_id, name, description, stock_edition):
+        """
+            The method allows you to add a new warehouse available in BaseLinker catalogues.
+            Adding a warehouse with the same identifier again will cause updates of the previously saved warehouse.
+            The method does not allow editing warehouses created automatically
+            for the purpose of keeping external stocks of shops,
+            wholesalers etc. Such warehouse may be later used in addInventory method.
+        Keywords:
+            warehouse_id int: (required) ID of the warehouse
+            name varchar(100): (required) Warehouse name
+            description text: (required) Warehouse description
+            stock_edition bool: (required) Is manual editing of stocks permitted.
+            A false value means that you can only edit your stock through the API.
+        """
+        return self._make_request('addInventoryWarehouse', warehouse_id=warehouse_id, name=name,
+                                  description=description, stock_edition=stock_edition)
 
