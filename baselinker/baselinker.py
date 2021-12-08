@@ -532,6 +532,31 @@ class Baselinker:
         """
         return self._make_request('deleteInventory', inventory_id=inventory_id)
 
+    def get_inventories(self):
+        """
+         The method allows you to retrieve a list of catalogs available in the BaseLinker storage.
+        """
+        return self._make_request('getInventories')
+
+    def add_inventory_category(self, inventory_id, category_id, name, parent_id):
+        """
+         The method allows you to add a category to the BaseLinker catalog.
+         Adding a category with the same identifier again, updates the previously saved category
+        Keywords:
+            inventory_id int: (required) Catalog ID. The list of identifiers can be retrieved using the method get_inventories.
+            category_id int: (required) The category identifier to be provided for updates. Should be left blank when creating a new category.
+            name varchar(200): (required) Category name
+            parent_id int: (required) The parent category identifier obtained previously at the output of the
+            add_category method. Categories should be added starting from the hierarchy root so that
+            the child is always added after the parent (you need to know the parent ID to add the child).
+            For the top level category, 0 should be given as parent_id.
+        """
+        return self._make_request('addInventoryCategory', inventory_id=inventory_id, category_id=category_id,
+                                  name=name, parent_id=parent_id)
+
+
+
+
 
 
 
