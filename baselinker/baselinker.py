@@ -1,6 +1,7 @@
 import json
 import requests
 
+
 class Baselinker:
     """Baselinker API client"""
 
@@ -49,7 +50,8 @@ class Baselinker:
             filter_email varchar(50): (optional) Filtering of order lists by e-mail address (displays only orders with the given e-mail address).
         """
         return self._make_request('getOrders', order_id=order_id, date_confirmed_from=date_confirmed_from,
-                                  date_from=date_from, id_from=id_from, get_unconfirmed_orders=get_unconfirmed_orders,
+                                  date_from=date_from, id_from=id_from,
+                                  get_unconfirmed_orders=get_unconfirmed_orders,
                                   status_id=status_id, filter_email=filter_email)
 
     def get_order_sources(self):
@@ -163,13 +165,15 @@ class Baselinker:
         return self._make_request('getReceipt', receipt_id=receipt_id, order_id=order_id)
 
     def set_order_fields(self, order_id=None, admin_comments=None, user_comments=None, payment_method=None,
-                       payment_method_cod=None, email=None, phone=None, user_login=None, delivery_method=None,
-                       delivery_price=None, delivery_fullname=None, delivery_company=None, delivery_address=None,
-                       delivery_postcode=None, delivery_city=None, delivery_country_code=None, delivery_point_id=None,
-                       delivery_point_name=None, delivery_point_address=None, delivery_point_postcode=None,
-                       delivery_point_city=None, invoice_fullname=None, invoice_company=None, invoice_nip=None,
-                       invoice_address=None, invoice_postcode=None, invoice_city=None, invoice_country_code=None,
-                       want_invoice=None, extra_field_1=None, extra_field_2=None, pick_state=None, pack_state=None):
+                         payment_method_cod=None, email=None, phone=None, user_login=None, delivery_method=None,
+                         delivery_price=None, delivery_fullname=None, delivery_company=None, delivery_address=None,
+                         delivery_postcode=None, delivery_city=None, delivery_country_code=None,
+                         delivery_point_id=None,
+                         delivery_point_name=None, delivery_point_address=None, delivery_point_postcode=None,
+                         delivery_point_city=None, invoice_fullname=None, invoice_company=None, invoice_nip=None,
+                         invoice_address=None, invoice_postcode=None, invoice_city=None, invoice_country_code=None,
+                         want_invoice=None, extra_field_1=None, extra_field_2=None, pick_state=None,
+                         pack_state=None):
         """
             The method allows you to edit selected fields (e.g. address data, notes, etc.) of a specific order.
             Only the fields that you want to edit should be given, other fields can be omitted in the request.
@@ -207,14 +211,25 @@ class Baselinker:
             pick_state (int) Flag indicating the status of the order products collection (1 - all products have been collected, 0 - not all products have been collected)
             pack_state (int) Flag indicating the status of the order products packing (1 - all products have been packed, 0 - not all products have been packed)
         """
-        return self._make_request('setOrderFields', order_id=order_id, admin_comments=admin_comments, user_comments=user_comments,
-                                  payment_method=payment_method, payment_method_cod=payment_method_cod, email=email, phone=phone, user_login=user_login,
-                                  delivery_method=delivery_method, delivery_price=delivery_price, delivery_fullname=delivery_fullname, delivery_company=delivery_company,
-                                  delivery_address=delivery_address, delivery_postcode=delivery_postcode, delivery_city=delivery_city, delivery_country_code=delivery_country_code,
-                                  delivery_point_id=delivery_point_id, delivery_point_name=delivery_point_name, delivery_point_address=delivery_point_address,
-                                  delivery_point_postcode=delivery_point_postcode, delivery_point_city=delivery_point_city, invoice_fullname=invoice_fullname, invoice_company=invoice_company,
-                                  invoice_nip=invoice_nip, invoice_address=invoice_address, invoice_postcode=invoice_postcode, invoice_city=invoice_city, invoice_country_code=invoice_country_code,
-                                  want_invoice=want_invoice, extra_field_1=extra_field_1, extra_field_2=extra_field_2, pick_state=pick_state, pack_state=pack_state)
+        return self._make_request('setOrderFields', order_id=order_id, admin_comments=admin_comments,
+                                  user_comments=user_comments,
+                                  payment_method=payment_method, payment_method_cod=payment_method_cod, email=email,
+                                  phone=phone, user_login=user_login,
+                                  delivery_method=delivery_method, delivery_price=delivery_price,
+                                  delivery_fullname=delivery_fullname, delivery_company=delivery_company,
+                                  delivery_address=delivery_address, delivery_postcode=delivery_postcode,
+                                  delivery_city=delivery_city, delivery_country_code=delivery_country_code,
+                                  delivery_point_id=delivery_point_id, delivery_point_name=delivery_point_name,
+                                  delivery_point_address=delivery_point_address,
+                                  delivery_point_postcode=delivery_point_postcode,
+                                  delivery_point_city=delivery_point_city,
+                                  invoice_fullname=invoice_fullname, invoice_company=invoice_company,
+                                  invoice_nip=invoice_nip, invoice_address=invoice_address,
+                                  invoice_postcode=invoice_postcode, invoice_city=invoice_city,
+                                  invoice_country_code=invoice_country_code,
+                                  want_invoice=want_invoice, extra_field_1=extra_field_1,
+                                  extra_field_2=extra_field_2,
+                                  pick_state=pick_state, pack_state=pack_state)
 
     def add_order_product(self, order_id=None, storage=None, storage_id=None,
                           product_id=None, variant_id=None, auction_id=None,
@@ -244,9 +259,9 @@ class Baselinker:
                                   price_brutto=price_brutto, tax_rate=tax_rate, quantity=quantity, weight=weight)
 
     def set_order_product_fields(self, order_id, order_product_id, storage=None, storage_id=None,
-                          product_id=None, variant_id=None, auction_id=None,
-                          name=None, sku=None, ean=None, attributes=None,
-                          price_brutto=None, tax_rate=None, quantity=None, weight=None):
+                                 product_id=None, variant_id=None, auction_id=None,
+                                 name=None, sku=None, ean=None, attributes=None,
+                                 price_brutto=None, tax_rate=None, quantity=None, weight=None):
         """
              The method allows you to edit the data of selected items (e.g. prices, quantities etc.) of a specific order.
               Only the fields that you want to edit should be given, the remaining fields can be omitted in the request.
@@ -268,7 +283,8 @@ class Baselinker:
             weight (float) Single piece weight
         """
         return self._make_request('setOrderProductFields', order_id=order_id, order_product_id=order_product_id,
-                                  storage=storage, storage_id=storage_id, product_id=product_id, variant_id=variant_id,
+                                  storage=storage, storage_id=storage_id, product_id=product_id,
+                                  variant_id=variant_id,
                                   auction_id=auction_id, name=name, sku=sku, ean=ean, attributes=attributes,
                                   price_brutto=price_brutto, tax_rate=tax_rate, quantity=quantity, weight=weight)
 
@@ -327,3 +343,10 @@ class Baselinker:
         """
         return self._make_request('addOrderInvoiceFile', invoice_id=invoice_id, file=file,
                                   external_invoice_number=external_invoice_number)
+
+    def get_external_storages_list(self):
+        """
+              The method allows you to retrieve a list of available external storages (shops, wholesalers)
+              that can be referenced via API.
+        """
+        return self._make_request('getExternalStoragesList')
