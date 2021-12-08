@@ -524,7 +524,13 @@ class Baselinker:
                                   default_price_group=default_price_group, warehouses=warehouses,
                                   default_warehouse=default_warehouse, reservations=reservations)
 
-
+    def delete_inventory(self, inventory_id):
+        """
+         The method allows you to delete a catalog from BaseLinker storage.
+        Keywords:
+            inventory_id int: (required) Catalog ID. The list of identifiers can be retrieved using the method get_inventories.
+        """
+        return self._make_request('deleteInventory', inventory_id=inventory_id)
 
 
 
