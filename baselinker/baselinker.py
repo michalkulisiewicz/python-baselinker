@@ -592,6 +592,12 @@ class Baselinker:
         """
         return self._make_request('deleteInventoryManufacturer', manufacturer_id=manufacturer_id)
 
+    def get_inventory_manufacturers(self):
+        """
+         The method allows you to retrieve a list of manufacturers for a BaseLinker catalog.
+        """
+        return self._make_request('getInventoryManufacturers')
+
 
 
 
