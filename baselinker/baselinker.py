@@ -399,3 +399,23 @@ class Baselinker:
                                   filter_price_to=filter_price_to, filter_quantity_from=filter_quantity_from,
                                   filter_quantity_to=filter_quantity_to, filter_available=filter_available, page=page)
 
+    def get_external_storage_products_quantity(self, storage_id, page):
+        """
+              The method allows you to retrieve a category list from an external storage (shop/wholesale)
+              connected to BaseLinker.
+        Keywords:
+            storage_id varchar(30): (required) Storage ID in format "[type:shop|warehouse]_[id:int]" (e.g. "shop_2445").
+            page (int): (optional) pagination
+        """
+        return self._make_request('getExternalStorageProductsQuantity', storage_id=storage_id, page=page)
+
+    def get_external_storage_products_prices(self, storage_id, page):
+        """
+              The method allows you to retrieve a category list from an external storage (shop/wholesale)
+              connected to BaseLinker.
+        Keywords:
+            storage_id varchar(30): (required) Storage ID in format "[type:shop|warehouse]_[id:int]" (e.g. "shop_2445").
+            page (int): (optional) pagination
+        """
+        return self._make_request('getExternalStorageProductsPrices', storage_id=storage_id, page=page)
+
