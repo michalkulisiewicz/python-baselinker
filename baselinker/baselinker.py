@@ -615,6 +615,15 @@ class Baselinker:
         """
         return self._make_request('getInventoryIntegrations', inventory_id=inventory_id)
 
+    def get_inventory_available_text_field_keys(self, inventory_id):
+        """
+         The method returns a list of product text fields that can be overwritten for specific integration.
+        Keywords:
+            inventory_id int: (required) Catalog ID. The list of identifiers can be retrieved
+            by the get_inventories method (inventory_id field).
+        """
+        return self._make_request('getInventoryAvailableTextFieldKeys', inventory_id=inventory_id)
+
 
 
 
