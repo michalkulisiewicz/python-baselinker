@@ -554,6 +554,16 @@ class Baselinker:
         return self._make_request('addInventoryCategory', inventory_id=inventory_id, category_id=category_id,
                                   name=name, parent_id=parent_id)
 
+    def delete_inventory_category(self, category_id):
+        """
+         The method allows you to remove categories from BaseLinker warehouse.
+         Along with the category, the products contained therein are removed
+         (however, this does not apply to products in subcategories).
+         The subcategories will be changed to the highest level categories.
+        Keywords:
+            category_id int: (required) The number of the category to be removed in the BaseLinker storage.
+        """
+        return self._make_request('deleteInventoryCategory', category_id=category_id)
 
 
 
