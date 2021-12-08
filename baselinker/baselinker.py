@@ -496,6 +496,36 @@ class Baselinker:
         """
         return self._make_request('getInventoryWarehouses')
 
+    def add_inventory(self, inventory_id, name, description, languages, default_language, price_groups,
+                     default_price_group, warehouses, default_warehouse, reservations):
+        """
+           The method allows you to add the BaseLinker catalogs.
+           Adding a catalog with the same identifier again will cause updates of the previously saved catalog.
+        Keywords:
+            inventory_id int: (required) Catalog ID. The list of identifiers can be retrieved using the method get_inventories.
+            name varchar(100): (required) Catalog name
+            description text: (required) Catalog description
+            languages array: (required) An array of languages available in the catalogue.
+            default_language char(2): (required) Default catalogue language. Must be included in the "languages" parameter.
+            price_groups (array): (required) An array of price group identifiers available in the catalogue.
+            The list of price group identifiers can be downloaded using the get_inventory_price_groups method
+            default_price_group	 int: (required) ID of the price group default for the catalogue.
+            The identifier must be included in the "price_groups" parameter.
+            warehouses (array): (required) An array of warehouse identifiers available in the catalogue.
+            The list of warehouse identifiers can be retrieved using the get_inventory_warehouses API method.
+            The format of the identifier should be as follows: "[type:bl|shop|warehouse]_[id:int]". (e.g. "shop_2445")
+            default_warehouse varchar(30): (required) Identifier of the warehouse default for the catalogue.
+            The identifier must be included in the "warehouses" parameter.
+            reservations (bool): (required) Does this catalogue support reservations
+        """
+        return self._make_request('addInventory', inventory_id=inventory_id, name=name,
+                                  description=description, languages=languages,
+                                  default_language=default_language, price_groups=price_groups,
+                                  default_price_group=default_price_group, warehouses=warehouses,
+                                  default_warehouse=default_warehouse, reservations=reservations)
+
+
+
 
 
 
