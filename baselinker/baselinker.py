@@ -455,4 +455,10 @@ class Baselinker:
         """
         return self._make_request('deleteInventoryPriceGroup', price_group_id=price_group_id)
 
+    def get_inventory_price_groups(self):
+        """
+            The method allows to retrieve price groups existing in BaseLinker storage
+        """
+        return self._make_request('getInventoryPriceGroups')
+
 
