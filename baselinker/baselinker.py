@@ -350,3 +350,13 @@ class Baselinker:
               that can be referenced via API.
         """
         return self._make_request('getExternalStoragesList')
+
+    def get_external_storage_categories(self, storage_id):
+        """
+              The method allows you to retrieve a category list from an external storage (shop/wholesale)
+              connected to BaseLinker.
+        Keywords:
+            storage_id varchar(30): (required) Storage ID in format "[type:shop|warehouse]_[id:int]" (e.g. "shop_2445").
+        """
+        return self._make_request('getExternalStorageCategories', storage_id=storage_id)
+
