@@ -419,3 +419,16 @@ class Baselinker:
         """
         return self._make_request('getExternalStorageProductsPrices', storage_id=storage_id, page=page)
 
+    def update_external_storage_products_quantity(self, storage_id, products):
+        """
+              The method allows you to retrieve a category list from an external storage (shop/wholesale)
+              connected to BaseLinker.
+        Keywords:
+            storage_id varchar(30): (required) Storage ID in format "[type:shop|warehouse]_[id:int]" (e.g. "shop_2445").
+            products array: (required) An array of products. Each product is a separate element of the array.
+            The product consists of a 3 element array of components:
+            0 => product ID number (varchar)
+            1 => variant ID number (0 if the main product is changed, not the variant) (int)
+            2 => Stock quantity (int)
+        """
+        return self._make_request('updateExternalStorageProductsQuantity', storage_id=storage_id, products=products)
