@@ -642,6 +642,31 @@ class Baselinker:
         """
         return self._make_request('getInventoryProductsData', inventory_id=inventory_id, products=products)
 
+    def get_inventory_products_list(self, inventory_id, filter_id=None, filter_category_id=None,
+                                    filter_ean=None, filter_sku=None, filter_name=None, filter_price_from=None,
+                                    filter_stock_from=None, filter_price_to=None, page=None, filter_sort=None):
+        """
+         The method allows to retrieve a basic data of chosen products from BaseLinker catalogs.
+
+        Keywords:
+            inventory_id int: (required) Catalog ID. The list of identifiers can be retrieved by the get_inventories method
+            filter_id int (optional) limiting results to a specific product id
+            filter_category_id int (optional) Retrieving products from a specific category
+            filter_ean varchar(32) (optional) limiting results to a specific ean
+            filter_sku varchar(50) (optional) limiting the results to a specific SKU (stock keeping number)
+            filter_name varchar(200) (optional) item name filter (part of the searched name or an empty field)
+            filter_price_from float (optional) minimum price limit (not displaying products with lower price)
+            filter_price_to float (optional) maximum price limit
+            filter_stock_from int (optional) minimum quantity limit
+            page int (optional) Results paging (1000 products per page for BaseLinker warehouse)
+            filter_sort varchar(30) (optional) the value for sorting the product list. Possible values: "id [ASC|DESC]"
+        """
+        return self._make_request('getInventoryProductsList', inventory_id=inventory_id, filter_id=filter_id,
+                                  filter_category_id=filter_category_id, filter_ean=filter_ean,
+                                  filter_sku=filter_sku, filter_name=filter_name, filter_price_from=filter_price_from,
+                                  filter_price_to=filter_price_to, filter_stock_from=filter_stock_from,
+                                  page=page, filter_sort=filter_sort)
+
 
 
 
