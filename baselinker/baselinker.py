@@ -575,6 +575,16 @@ class Baselinker:
         """
         return self._make_request('getInventoryCategories', inventory_id=inventory_id)
 
+    def add_inventory_manufacturer(self, manufacturer_id, name):
+        """
+         The method allows you to retrieve a list of categories for a BaseLinker catalog.
+        Keywords:
+            manufacturer_id int: (required) Manufacturer ID provided in case of an update. Should be blank when creating a new manufacturer.
+            name varchar(200): (required) Manufacturer name
+        """
+        return self._make_request('addInventoryManufacturer', manufacturer_id=manufacturer_id, name=name)
+
+
 
 
 
