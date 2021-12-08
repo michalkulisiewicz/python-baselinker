@@ -624,6 +624,14 @@ class Baselinker:
         """
         return self._make_request('getInventoryAvailableTextFieldKeys', inventory_id=inventory_id)
 
+    def delete_inventory_product(self, product_id):
+        """
+         The method allows you to remove the product from BaseLinker catalog.
+        Keywords:
+            product_id int: (required) BaseLinker catalogue product identifier
+        """
+        return self._make_request('deleteInventoryProduct', product_id=product_id)
+
 
 
 
