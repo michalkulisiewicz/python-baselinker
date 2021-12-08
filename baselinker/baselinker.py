@@ -624,6 +624,76 @@ class Baselinker:
         """
         return self._make_request('getInventoryAvailableTextFieldKeys', inventory_id=inventory_id)
 
+    def add_inventory_product(self, inventory_id, product_id, parent_id, is_bundle, ean,
+                            sku, tax_rate, weight, height, width, length, star,
+                            manufacturer_id, category_id, prices, stock, locations,
+                            text_fields, images, links, bundle_products):
+        """
+         The method allows you to add a new product to BaseLinker catalog. Entering the product with the ID updates previously saved product.
+        Keywords:
+            inventory_id	varchar(30)	Catalog ID. The list of identifiers can be retrieved using the method getInventories. (inventory_id field).
+            product_id	varchar(30)	Main product identifier, given only during the update. Should be left blank when creating a new product. The new product identifier is returned as a response to this method.
+            parent_id	varchar(30)	Product parent ID. To be provided only if the added/edited product is a variant of another product.
+            is_bundle	bool	Is the given product a part of a bundle
+            ean	varchar(32)	Product EAN number.
+            sku	varchar(50)	Product SKU number.
+            tax_rate	float	VAT tax rate (e.g. "20")
+            weight	decimal(10,2)	Weight in kilograms.
+            height	decimal(10,2)	Product height
+            width	decimal(10,2)	Product width
+            length	decimal(10,2)	Product length
+            star	int	Product star type. It takes from 0 to 5 values. 0 means no starring.
+            manufacturer_id	int	Product manufacturer ID. IDs can be retrieved with getInventoryManufacturers method.
+            category_id	int	Product category ID (category must be previously created with addInventoryCategories) method.
+            prices	array	A list containing product prices, where the key is the price group ID
+            and value is a product gross price for a given price group.
+            The list of price groups can be retrieved with get_inventory_price_groups method.
+            locations array	A list containing product locations where the key is the warehouse ID and value is
+            a product location for a given warehouse, eg. "A-5-2".
+            Warehouse ID should have this format: "[type:bl|shop|warehouse]_[id:int]" (eg. "bl_123").
+            The list of warehouse IDs can be retrieved with get_inventory_warehouses method.
+            text_fields	array A list containing field text values (names, descriptions, etc.) of a product,
+            where the key is the field text ID and value is the field value.
+            The field text ID consists of the following components separated with the "|" character:
+            [field] - Field name. Accepted field names: "name", "description", "features", "description_extra1", "description_extra2", "description_extra3", "description_extra4", "extra_field_[extra-field-ID]" e.g. "extra_field_75". The list of extra fields IDs can be retrieved with getInventoryExtraFields method.
+            [lang] - A two-letter code of language, which gets assigned given value e.g. "en". If this value is not specified, the default catalog language is assigned. The list of languages available for each integration can be retrieved with getInventoryIntegrations method.
+            [source_id] - Integration ID provided when the given text field value is to be overwritten only for a specific integration. ID should have a following format: "[type:varchar]_[id:int]", where the type means a kind of integration (e.g. "ebay", "amazon", "google"), and ID is an account identifier for given integration (eg. "ebay_2445").
+            If a value is to be overwritten throughout the integration (e.g. for all Amazon accounts), the value "0" should be used as the identifier. (e.g. "amazon_0").
+            Examples of text field identifiers:
+            "name" - Default name assigned to the default language.
+            "name|de" - Name assigned to a particular language.
+            "name|de|amazon_0" - Name assigned to a specific language for all Amazon accounts.
+            "name|de|amazon_123" - Name assigned to a specific language for an Amazon account with ID 123.
+            The list of all text field identifiers can be retrieved with the getInventoryAvailableTextFieldKeys method.
+            In the case of the name and short additional fields, the character limit for the field value is 200.
+            When specifying the value of a product feature (field "features"),
+            provide a list where the key is the name of the parameter (e.g. "Colour") and the value is the value of that parameter (e.g. "White").
+            images	array	An array of product images (maximum 16). Each element of the array is a separate photo.
+            You can submit a photo in binary format, or a link to the photo. In case of binary format,
+            the photo should be coded in base64 and at the very beginning of the photo string the prefix "data:"
+            should be provided. In case of link to the photo, the prefix "url:" must be given before the link.
+            Example:
+            images[0] = "url:http://adres.pl/zdjecie.jpg";
+            images[1] = "data:4AAQSkZJRgABA[...]";
+            links	array	An array containing product links to external warehouses (e.g. shops, wholesalers).
+            Each element of the array is a list in which the key is the identifier of the external warehouse in the format:
+            "[type:shop|warehouse]_[id:int]". (e.g. "shop_2445").
+            The warehouse identifiers can be retrieved with the getStoragesList method. The value is an array containing the fields listed below.
+                | - product_id	varchar	Product identifier in external warehouse.
+                | - variant_id (optional)	varchar	Product variant identifier in the external warehouse.
+                When assigning a link to a main product, this parameter shall be omitted or a value of 0 provided.
+            bundle_products	array A list containing information about the products included in the bundle,
+            where the key is the identifier of the product included in the bundle,
+            and the value is the number of pieces of this product in the bundle.
+            Subproducts can only be defined if the added/edited product is a bundle (is_bundle = true).
+        """
+        return self._make_request('addInventoryProduct', inventory_id=inventory_id, product_id=product_id,
+                                  parent_id=parent_id, is_bundle=is_bundle, ean=ean,
+                                  sku=sku, tax_rate=tax_rate, weight=weight, height=height,
+                                  width=width, length=length, star=star, manufacturer_id=manufacturer_id
+                                  ,category_id=category_id, prices=prices, stock=stock, locations=locations,
+                                  text_fields=text_fields, images=images, links=links, bundle_products=bundle_products)
+
     def delete_inventory_product(self, product_id):
         """
          The method allows you to remove the product from BaseLinker catalog.
