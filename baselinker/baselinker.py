@@ -694,5 +694,12 @@ class Baselinker:
         """
         return self._make_request('updateInventoryProductsStock', inventory_id=inventory_id, products=products)
 
-
-
+    def get_inventory_products_prices(self, inventory_id, page):
+        """
+         The method allows to retrieve the gross prices of products from BaseLinker catalogues.
+        Keywords:
+            inventory_id int: (required) Catalog ID. The list of identifiers can be retrieved
+            by the get_inventories method
+            page int (optional) Results paging (1000 products per page for BaseLinker warehouse)
+        """
+        return self._make_request('getInventoryProductsPrices', inventory_id=inventory_id, page=page)
