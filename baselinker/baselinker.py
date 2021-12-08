@@ -478,3 +478,12 @@ class Baselinker:
         return self._make_request('addInventoryWarehouse', warehouse_id=warehouse_id, name=name,
                                   description=description, stock_edition=stock_edition)
 
+    def delete_inventory_warehouse(self, warehouse_id):
+        """
+           The method allows you to remove the warehouse available in BaseLinker catalogues.
+           The method does not allow to remove warehouses created automatically
+           for the purpose of keeping external stocks of shops, wholesalers etc.
+        Keywords:
+            warehouse_id int: (required) ID of the warehouse
+        """
+        return self._make_request('deleteInventoryWarehouse', warehouse_id=warehouse_id)
