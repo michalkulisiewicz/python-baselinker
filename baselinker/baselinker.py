@@ -447,3 +447,12 @@ class Baselinker:
         return self._make_request('addInventoryPriceGroup', price_group_id=price_group_id, name=name,
                                   description=description, currency=currency)
 
+    def delete_inventory_price_group(self, price_group_id):
+        """
+            The method allows you to remove the price group from BaseLinker storage.
+        Keywords:
+            price_group_id int: (required) Price group identifier
+        """
+        return self._make_request('deleteInventoryPriceGroup', price_group_id=price_group_id)
+
+
