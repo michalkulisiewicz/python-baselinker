@@ -598,6 +598,22 @@ class Baselinker:
         """
         return self._make_request('getInventoryManufacturers')
 
+    def get_inventory_extra_fields(self):
+        """
+         The method allows you to retrieve a list of extra fields for a BaseLinker catalog.
+        """
+        return self._make_request('getInventoryExtraFields')
+
+    def get_inventory_integrations(self, inventory_id):
+        """
+         The method returns a list of integrations where text values in the catalog can be overwritten.
+         The returned data contains a list of accounts for each integration
+         and a list of languages supported by the integration
+        Keywords:
+            inventory_id int: (required) Catalog ID.
+            The list of identifiers can be retrieved using the method get_inventories. (inventory_id field).
+        """
+        return self._make_request('getInventoryIntegrations', inventory_id=inventory_id)
 
 
 
