@@ -703,3 +703,16 @@ class Baselinker:
             page int (optional) Results paging (1000 products per page for BaseLinker warehouse)
         """
         return self._make_request('getInventoryProductsPrices', inventory_id=inventory_id, page=page)
+
+    def update_inventory_products_prices(self, inventory_id, products):
+        """
+         The method allows to retrieve the gross prices of products from BaseLinker catalogues.
+        Keywords:
+            inventory_id int: (required) Catalog ID. The list of identifiers can be retrieved
+            by the get_inventories method
+            products array (required) Lista z produktami, w której kluczem jest identyfikator produktu, a wartością lista cen.
+            W przypadku określania cen dla wariantu należy podać identyfikator wariantu jako identyfikator produktu.
+            W Liście cen kluczem powinien być identyfikator grupy cenowej, a wartością stan magazynowy dla tego magazynu.
+             Listę grup cenowych mozna pobrać za pomocą metody get_inventory_price_groups.
+        """
+        return self._make_request('updateInventoryProductsPrices', inventory_id=inventory_id, products=products)
