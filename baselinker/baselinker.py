@@ -565,6 +565,16 @@ class Baselinker:
         """
         return self._make_request('deleteInventoryCategory', category_id=category_id)
 
+    def get_inventory_categories(self, inventory_id):
+        """
+         The method allows you to retrieve a list of categories for a BaseLinker catalog.
+        Keywords:
+            inventory_id int: (required) Catalog ID. The list of identifiers can be retrieved by
+            the get_inventories method (inventory_id field).
+            To retrieve categories available for all catalogs created in BaseLinker, this field should be omitted.
+        """
+        return self._make_request('getInventoryCategories', inventory_id=inventory_id)
+
 
 
 
