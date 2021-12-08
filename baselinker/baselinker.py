@@ -421,8 +421,8 @@ class Baselinker:
 
     def update_external_storage_products_quantity(self, storage_id, products):
         """
-              The method allows you to retrieve a category list from an external storage (shop/wholesale)
-              connected to BaseLinker.
+             The method allows to bulk update the product stock (and/or variants) in an external storage (shop/wholesaler)
+             connected to BaseLinker. Maximum 1000 products at a time.
         Keywords:
             storage_id varchar(30): (required) Storage ID in format "[type:shop|warehouse]_[id:int]" (e.g. "shop_2445").
             products array: (required) An array of products. Each product is a separate element of the array.
