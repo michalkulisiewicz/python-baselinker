@@ -677,5 +677,22 @@ class Baselinker:
         """
         return self._make_request('getInventoryProductsStock', inventory_id=inventory_id, page=page)
 
+    def update_inventory_products_stock(self, inventory_id, products):
+        """
+         The method allows to update stocks of products (and/or their variants) in BaseLinker catalog. Maximum 1000 products at a time.
+        Keywords:
+            inventory_id int: (required) Catalog ID. The list of identifiers can be retrieved
+            by the get_inventories method
+            products array (required) An array of products, where the key is a product ID and the value is a list of stocks.
+            When determining the variant stock, provide variant ID as a product ID.
+            In the stocks array the key should be the warehouse ID and the value - stock for that warehouse.
+            The format of the warehouse identifier should be as follows:
+            "[type:bl|shop|warehouse]_[id:int]". (e.g. "bl_123").
+            The list of warehouse identifiers can be retrieved using the get_inventory_warehouses method.
+            Stocks cannot be assigned to the warehouses created automatically for
+            purposes of keeping external stocks (shops, wholesalers, etc.).
+        """
+        return self._make_request('updateInventoryProductsStock', inventory_id=inventory_id, products=products)
+
 
 
