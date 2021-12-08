@@ -370,3 +370,32 @@ class Baselinker:
         """
         return self._make_request('getExternalStorageProductsData', storage_id=storage_id, products=products)
 
+    def get_external_storage_products_list(self, storage_id, filter_category_id=None, filter_sort=None, filter_id=None,
+                                           filter_ean=None, filter_sku=None, filter_name=None, filter_price_from=None,
+                                           filter_price_to=None,  filter_quantity_from=None, filter_quantity_to=None,
+                                           filter_available=None, page=None):
+        """
+              The method allows you to retrieve a category list from an external storage (shop/wholesale)
+              connected to BaseLinker.
+        Keywords:
+            storage_id varchar(30): (required) Storage ID in format "[type:shop|warehouse]_[id:int]" (e.g. "shop_2445").
+            filter_category_id varchar(30): (optional) Retrieving products from a specific category
+            filter_sort	 varchar(30): (optional) the value for sorting the product list.
+            Possible values: "id [ASC|DESC]", "name [ASC|DESC]", "quantity [ASC|DESC]", "price [ASC|DESC]"
+            filter_id varchar(30): (optional) limiting results to a specific product id
+            filter_ean varchar(320): (optional) limiting results to a specific ean
+            filter_sku varchar(32): (optional) limiting the results to a specific SKU (stock keeping number)
+            filter_name varchar(100): (optional) item name filter (part of the searched name or an empty field)
+            filter_price_from (float): (optional) minimum price limit (not displaying products with lower price)
+            filter_price_to (float): (optional) maximum price limit
+            filter_quantity_from (int): (optional) maximum price limit
+            filter_quantity_to (int): (optional) maximum quantity limit
+            filter_available (int): (optional) displaying only products marked as available (value 1) or not available (0) or all (empty value)
+            page (int): (optional) pagination
+        """
+        return self._make_request('getExternalStorageProductsList', storage_id=storage_id, filter_category_id=filter_category_id,
+                                  filter_sort=filter_sort, filter_id=filter_id, filter_ean=filter_ean,
+                                  filter_sku=filter_sku, filter_name=filter_name, filter_price_from=filter_price_from,
+                                  filter_price_to=filter_price_to, filter_quantity_from=filter_quantity_from,
+                                  filter_quantity_to=filter_quantity_to, filter_available=filter_available, page=page)
+
