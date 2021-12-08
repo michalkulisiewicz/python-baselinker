@@ -716,3 +716,29 @@ class Baselinker:
              Listę grup cenowych mozna pobrać za pomocą metody get_inventory_price_groups.
         """
         return self._make_request('updateInventoryProductsPrices', inventory_id=inventory_id, products=products)
+
+    def get_inventory_product_logs(self, product_id, date_from=None, date_to=None, log_type=None, sort=None, page=None):
+        """
+         The method allows to retrieve a list of events related to product change (or their variants) in the BaseLinker catalog.
+        Keywords:
+            product_id int: (required) Product identifier. In case of retrieving logs for a variant,
+            the variant identifier must be provided as the product identifier.
+            date_from int (optional) Date from which logs are to be retrieved. Unix time stamp format.
+            date_to	int	(optional) Date up to which logs are to be retrieved. Unix time stamp format.
+            log_type int (optional) List of event types you want to retrieve. Available values:
+                1 - Change in stock
+                2 - Price change
+                3 - Product creation
+                4 - Product deletion
+                5 - Text fields modifications
+                6 - Locations modifications
+                7 - Modifications of links
+                8 - Gallery modifications
+                9 - Variant modifications
+                10 - Modifications of bundle products
+            sort int(optional) Type of log sorting. Possible "ASC" values ( ascending from date), "DESC" (descending after the date).
+            By default the sorting is done in ascending order.
+            page int (optional) Results paging (100 product editions per page).
+        """
+        return self._make_request('getInventoryProductLogs', product_id=product_id, date_from=date_from,
+                                  date_to=date_to, log_type=log_type, sort=sort, page=page)
