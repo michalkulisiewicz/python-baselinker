@@ -1,5 +1,5 @@
+from .request import Request
 import json
-import requests
 
 
 class Baselinker:
@@ -8,32 +8,7 @@ class Baselinker:
     def __init__(self, api_token):
         self.api_token = api_token
         assert api_token != '', 'Must supply a non-empty API key.'
-        self.api_url = 'https://api.baselinker.com/connector.php'
-
-    def _get_request_data(self, method_name, parameters=None):
-        request_data = {}
-        request_data['method'] = method_name
-        if parameters:
-            request_data['parameters'] = json.dumps(parameters)
-        return request_data
-
-    def _get_request_headers(self):
-        headers = {}
-        headers['X-BLToken'] = self.api_token
-        return headers
-
-    def _make_request(self, method_name, **kwargs):
-        requests_data = self._get_request_data(method_name, kwargs)
-        headers = self._get_request_headers()
-        try:
-            with requests.Session() as s:
-                response = s.post(self.api_url, data=requests_data, headers=headers)
-                content = json.loads(response.content.decode("utf-8"))
-                return content
-
-        except requests.RequestException as e:
-            print(e)
-            raise e
+        self.request = Request(self.api_token)
 
     def get_orders(self, order_id=None, date_confirmed_from=None, date_from=None, id_from=None,
                    get_unconfirmed_orders=None, status_id=None, filter_email=None):
@@ -49,10 +24,10 @@ class Baselinker:
             status_id (int): (optional) The status identifier from which orders are to be collected. Leave blank to download orders from all statuses.
             filter_email varchar(50): (optional) Filtering of order lists by e-mail address (displays only orders with the given e-mail address).
         """
-        return self._make_request('getOrders', order_id=order_id, date_confirmed_from=date_confirmed_from,
-                                  date_from=date_from, id_from=id_from,
-                                  get_unconfirmed_orders=get_unconfirmed_orders,
-                                  status_id=status_id, filter_email=filter_email)
+        return self.request.make_request('getOrders', order_id=order_id, date_confirmed_from=date_confirmed_from,
+                                         date_from=date_from, id_from=id_from,
+                                         get_unconfirmed_orders=get_unconfirmed_orders,
+                                         status_id=status_id, filter_email=filter_email)
 
     def get_order_sources(self):
         """
@@ -60,7 +35,7 @@ class Baselinker:
         corresponds to a field order_source from the getOrders method. Available source types are "personal", "shop"
         or "marketplace_code" e.g. "ebay", "amazon", "ceneo", "emag", "allegro", etc.
         """
-        return self._make_request('getOrderSources')
+        return self.request.make_request('getOrderSources')
 
     def get_order_transaction_details(self, order_id):
         """
@@ -68,7 +43,7 @@ class Baselinker:
         Keywords:
             order_id (int): (optional) Order Identifier from BaseLinker order manager.
         """
-        return self._make_request('getOrderTransactionDetails', order_id=order_id)
+        return self.request.make_request('getOrderTransactionDetails', order_id=order_id)
 
     def get_orders_by_email(self, email):
         """
@@ -76,7 +51,7 @@ class Baselinker:
         Keywords:
             email (varchar(50): (required) The e-mail address we search for in orders.
         """
-        return self._make_request('getOrdersByEmail', email=email)
+        return self.request.make_request('getOrdersByEmail', email=email)
 
     def get_orders_by_phone(self, phone):
         """
@@ -84,7 +59,7 @@ class Baselinker:
         Keywords:
             phone (varchar(50): (required) The phone number we search for in orders.
         """
-        return self._make_request('getOrdersByPhone', phone=phone)
+        return self.request.make_request('getOrdersByPhone', phone=phone)
 
     def add_invoice(self, order_id, series_id):
         """
@@ -93,7 +68,7 @@ class Baselinker:
             order_id (int): (required) Order Identifier from BaseLinker order manager.
             series_id (int): (required) Series numbering identifier
         """
-        return self._make_request('addInvoice', order_id=order_id, series_id=series_id)
+        return self.request.make_request('addInvoice', order_id=order_id, series_id=series_id)
 
     def get_invoices(self, invoice_id=None, order_id=None, date_from=None,
                      id_from=None, series_id=None, get_external_invoices=None):
@@ -111,20 +86,20 @@ class Baselinker:
             series_id (int): (optional) numbering series ID that allows filtering after the invoice numbering series.
             get_external_invoices (bool): (optional, true by default) Download external invoices as well.
         """
-        return self._make_request('getInvoices', invoice_id=invoice_id, order_id=order_id, date_from=date_from,
+        return self.request.make_request('getInvoices', invoice_id=invoice_id, order_id=order_id, date_from=date_from,
                                   id_from=id_from, series_id=series_id, get_external_invoices=get_external_invoices)
 
     def get_series(self):
         """
               The method allows to download a series of invoice/receipt numbering.
         """
-        return self._make_request('getSeries')
+        return self.request.make_request('getSeries')
 
     def get_order_status_list(self):
         """
               The method allows you to download order statuses created by the customer in the BaseLinker order manager.
         """
-        return self._make_request('getOrderStatusList')
+        return self.request.make_request('getOrderStatusList')
 
     def get_order_payments_history(self, order_id=None, show_full_history=None):
         """
@@ -138,7 +113,7 @@ class Baselinker:
             including order value change entries, manual order payment edits.
             False by default - only returns entries containing an external payment identifier (most commonly used)
         """
-        return self._make_request('getOrderPaymentsHistory', order_id=order_id, show_full_history=show_full_history)
+        return self.request.make_request('getOrderPaymentsHistory', order_id=order_id, show_full_history=show_full_history)
 
     def get_new_receipts(self, series_id=None):
         """
@@ -152,7 +127,7 @@ class Baselinker:
             Using multiple series numbering for receipts is recommended when the user has multiple fiscal printers.
             Each fiscal printer should have a separate series.
         """
-        return self._make_request('getNewReceipts', series_id=series_id)
+        return self.request.make_request('getNewReceipts', series_id=series_id)
 
     def get_receipt(self, receipt_id=None, order_id=None):
         """
@@ -162,7 +137,7 @@ class Baselinker:
             receipt_id (int): Receipt ID. Not required if order_id is provided.
             order_id (int): Order ID. Not required if receipt_id is provided.
         """
-        return self._make_request('getReceipt', receipt_id=receipt_id, order_id=order_id)
+        return self.request.make_request('getReceipt', receipt_id=receipt_id, order_id=order_id)
 
     def set_order_fields(self, order_id=None, admin_comments=None, user_comments=None, payment_method=None,
                          payment_method_cod=None, email=None, phone=None, user_login=None, delivery_method=None,
@@ -211,7 +186,7 @@ class Baselinker:
             pick_state (int) Flag indicating the status of the order products collection (1 - all products have been collected, 0 - not all products have been collected)
             pack_state (int) Flag indicating the status of the order products packing (1 - all products have been packed, 0 - not all products have been packed)
         """
-        return self._make_request('setOrderFields', order_id=order_id, admin_comments=admin_comments,
+        return self.request.make_request('setOrderFields', order_id=order_id, admin_comments=admin_comments,
                                   user_comments=user_comments,
                                   payment_method=payment_method, payment_method_cod=payment_method_cod, email=email,
                                   phone=phone, user_login=user_login,
@@ -253,7 +228,7 @@ class Baselinker:
             quantity (int) Number of pieces
             weight (float) Single piece weight
         """
-        return self._make_request('addOrderProduct', order_id=order_id, storage=storage, storage_id=storage_id,
+        return self.request.make_request('addOrderProduct', order_id=order_id, storage=storage, storage_id=storage_id,
                                   product_id=product_id, variant_id=variant_id, auction_id=auction_id,
                                   name=name, sku=sku, ean=ean, attributes=attributes,
                                   price_brutto=price_brutto, tax_rate=tax_rate, quantity=quantity, weight=weight)
@@ -282,7 +257,7 @@ class Baselinker:
             quantity (int) Number of pieces
             weight (float) Single piece weight
         """
-        return self._make_request('setOrderProductFields', order_id=order_id, order_product_id=order_product_id,
+        return self.request.make_request('setOrderProductFields', order_id=order_id, order_product_id=order_product_id,
                                   storage=storage, storage_id=storage_id, product_id=product_id,
                                   variant_id=variant_id,
                                   auction_id=auction_id, name=name, sku=sku, ean=ean, attributes=attributes,
@@ -295,7 +270,7 @@ class Baselinker:
             order_id (int): (required) Order Identifier from BaseLinker order manager.
             order_product_id (int): (required) Order item ID from BaseLinker order manager.
         """
-        return self._make_request('deleteOrderProduct', order_id=order_id, order_product_id=order_product_id)
+        return self.request.make_request('deleteOrderProduct', order_id=order_id, order_product_id=order_product_id)
 
     def set_order_payment(self, order_id, payment_done, payment_date, payment_comment):
         """
@@ -308,7 +283,7 @@ class Baselinker:
             payment_date (int): (required) Payment date unixtime.
             payment_comment varchar(30): (required) Payments commentary.
         """
-        return self._make_request('setOrderPayment', order_id=order_id, payment_done=payment_done,
+        return self.request.make_request('setOrderPayment', order_id=order_id, payment_done=payment_done,
                                   payment_date=payment_date, payment_comment=payment_comment)
 
     def set_order_status(self, order_id, status_id):
@@ -318,7 +293,7 @@ class Baselinker:
             order_id (int): (required) Order ID number
             status_id (int): (required) Status ID number. The status list can be retrieved using getOrderStatusList.
         """
-        return self._make_request('setOrderStatus', order_id=order_id, status_id=status_id)
+        return self.request.make_request('setOrderStatus', order_id=order_id, status_id=status_id)
 
     def set_order_receipt(self, receipt_id, receipt_nr, date, printer_error=None):
         """
@@ -329,7 +304,7 @@ class Baselinker:
             date (int): (required) Receipt printing date (unixtime format)
             printer_error (bool): Flag indicating whether an error occurred during receipt printing (false by default)
         """
-        return self._make_request('setOrderReceipt', receipt_id=receipt_id, receipt_nr=receipt_nr,
+        return self.request.make_request('setOrderReceipt', receipt_id=receipt_id, receipt_nr=receipt_nr,
                                   date=date, printer_error=printer_error)
 
     def add_order_invoice_file(self, invoice_id, file, external_invoice_number):
@@ -341,7 +316,7 @@ class Baselinker:
             at the very beginning of the invoice string provide a prefix "data:" e.g. "data:4AAQSkSzkJRgABA[...]"
             external_invoice_number varchar(30): (required) External system invoice number (overwrites BaseLinker invoice number)
         """
-        return self._make_request('addOrderInvoiceFile', invoice_id=invoice_id, file=file,
+        return self.request.make_request('addOrderInvoiceFile', invoice_id=invoice_id, file=file,
                                   external_invoice_number=external_invoice_number)
 
     def get_external_storages_list(self):
@@ -349,7 +324,7 @@ class Baselinker:
               The method allows you to retrieve a list of available external storages (shops, wholesalers)
               that can be referenced via API.
         """
-        return self._make_request('getExternalStoragesList')
+        return self.request.make_request('getExternalStoragesList')
 
     def get_external_storage_categories(self, storage_id):
         """
@@ -358,7 +333,7 @@ class Baselinker:
         Keywords:
             storage_id varchar(30): (required) Storage ID in format "[type:shop|warehouse]_[id:int]" (e.g. "shop_2445").
         """
-        return self._make_request('getExternalStorageCategories', storage_id=storage_id)
+        return self.request.make_request('getExternalStorageCategories', storage_id=storage_id)
 
     def get_external_storage_products_data(self, storage_id, products):
         """
@@ -368,11 +343,11 @@ class Baselinker:
             storage_id varchar(30): (required) Storage ID in format "[type:shop|warehouse]_[id:int]" (e.g. "shop_2445").
             products array: (required) An array of product ID numbers to download
         """
-        return self._make_request('getExternalStorageProductsData', storage_id=storage_id, products=products)
+        return self.request.make_request('getExternalStorageProductsData', storage_id=storage_id, products=products)
 
     def get_external_storage_products_list(self, storage_id, filter_category_id=None, filter_sort=None, filter_id=None,
                                            filter_ean=None, filter_sku=None, filter_name=None, filter_price_from=None,
-                                           filter_price_to=None,  filter_quantity_from=None, filter_quantity_to=None,
+                                           filter_price_to=None, filter_quantity_from=None, filter_quantity_to=None,
                                            filter_available=None, page=None):
         """
               The method allows you to retrieve a category list from an external storage (shop/wholesale)
@@ -393,7 +368,8 @@ class Baselinker:
             filter_available (int): (optional) displaying only products marked as available (value 1) or not available (0) or all (empty value)
             page (int): (optional) pagination
         """
-        return self._make_request('getExternalStorageProductsList', storage_id=storage_id, filter_category_id=filter_category_id,
+        return self.request.make_request('getExternalStorageProductsList', storage_id=storage_id,
+                                  filter_category_id=filter_category_id,
                                   filter_sort=filter_sort, filter_id=filter_id, filter_ean=filter_ean,
                                   filter_sku=filter_sku, filter_name=filter_name, filter_price_from=filter_price_from,
                                   filter_price_to=filter_price_to, filter_quantity_from=filter_quantity_from,
@@ -407,7 +383,7 @@ class Baselinker:
             storage_id varchar(30): (required) Storage ID in format "[type:shop|warehouse]_[id:int]" (e.g. "shop_2445").
             page (int): (optional) pagination
         """
-        return self._make_request('getExternalStorageProductsQuantity', storage_id=storage_id, page=page)
+        return self.request.make_request('getExternalStorageProductsQuantity', storage_id=storage_id, page=page)
 
     def get_external_storage_products_prices(self, storage_id, page):
         """
@@ -417,7 +393,7 @@ class Baselinker:
             storage_id varchar(30): (required) Storage ID in format "[type:shop|warehouse]_[id:int]" (e.g. "shop_2445").
             page (int): (optional) pagination
         """
-        return self._make_request('getExternalStorageProductsPrices', storage_id=storage_id, page=page)
+        return self.request.make_request('getExternalStorageProductsPrices', storage_id=storage_id, page=page)
 
     def update_external_storage_products_quantity(self, storage_id, products):
         """
@@ -431,7 +407,7 @@ class Baselinker:
             1 => variant ID number (0 if the main product is changed, not the variant) (int)
             2 => Stock quantity (int)
         """
-        return self._make_request('updateExternalStorageProductsQuantity', storage_id=storage_id, products=products)
+        return self.request.make_request('updateExternalStorageProductsQuantity', storage_id=storage_id, products=products)
 
     def add_inventory_price_group(self, price_group_id, name, description, currency):
         """
@@ -444,7 +420,7 @@ class Baselinker:
             description text: (required) Price group description
             currency char(3): (required) 3-letter currency symbol e.g. PLN, EUR
         """
-        return self._make_request('addInventoryPriceGroup', price_group_id=price_group_id, name=name,
+        return self.request.make_request('addInventoryPriceGroup', price_group_id=price_group_id, name=name,
                                   description=description, currency=currency)
 
     def delete_inventory_price_group(self, price_group_id):
@@ -453,13 +429,13 @@ class Baselinker:
         Keywords:
             price_group_id int: (required) Price group identifier
         """
-        return self._make_request('deleteInventoryPriceGroup', price_group_id=price_group_id)
+        return self.request.make_request('deleteInventoryPriceGroup', price_group_id=price_group_id)
 
     def get_inventory_price_groups(self):
         """
             The method allows to retrieve price groups existing in BaseLinker storage
         """
-        return self._make_request('getInventoryPriceGroups')
+        return self.request.make_request('getInventoryPriceGroups')
 
     def add_inventory_warehouse(self, warehouse_id, name, description, stock_edition):
         """
@@ -475,7 +451,7 @@ class Baselinker:
             stock_edition bool: (required) Is manual editing of stocks permitted.
             A false value means that you can only edit your stock through the API.
         """
-        return self._make_request('addInventoryWarehouse', warehouse_id=warehouse_id, name=name,
+        return self.request.make_request('addInventoryWarehouse', warehouse_id=warehouse_id, name=name,
                                   description=description, stock_edition=stock_edition)
 
     def delete_inventory_warehouse(self, warehouse_id):
@@ -486,7 +462,7 @@ class Baselinker:
         Keywords:
             warehouse_id int: (required) ID of the warehouse
         """
-        return self._make_request('deleteInventoryWarehouse', warehouse_id=warehouse_id)
+        return self.request.make_request('deleteInventoryWarehouse', warehouse_id=warehouse_id)
 
     def get_inventory_warehouses(self):
         """
@@ -494,10 +470,10 @@ class Baselinker:
         The method also returns information about the warehouses created automatically
         for the purpose of keeping external stocks (shops, wholesalers etc.)
         """
-        return self._make_request('getInventoryWarehouses')
+        return self.request.make_request('getInventoryWarehouses')
 
     def add_inventory(self, inventory_id, name, description, languages, default_language, price_groups,
-                     default_price_group, warehouses, default_warehouse, reservations):
+                      default_price_group, warehouses, default_warehouse, reservations):
         """
            The method allows you to add the BaseLinker catalogs.
            Adding a catalog with the same identifier again will cause updates of the previously saved catalog.
@@ -518,7 +494,7 @@ class Baselinker:
             The identifier must be included in the "warehouses" parameter.
             reservations (bool): (required) Does this catalogue support reservations
         """
-        return self._make_request('addInventory', inventory_id=inventory_id, name=name,
+        return self.request.make_request('addInventory', inventory_id=inventory_id, name=name,
                                   description=description, languages=languages,
                                   default_language=default_language, price_groups=price_groups,
                                   default_price_group=default_price_group, warehouses=warehouses,
@@ -530,13 +506,13 @@ class Baselinker:
         Keywords:
             inventory_id int: (required) Catalog ID. The list of identifiers can be retrieved using the method get_inventories.
         """
-        return self._make_request('deleteInventory', inventory_id=inventory_id)
+        return self.request.make_request('deleteInventory', inventory_id=inventory_id)
 
     def get_inventories(self):
         """
          The method allows you to retrieve a list of catalogs available in the BaseLinker storage.
         """
-        return self._make_request('getInventories')
+        return self.request.make_request('getInventories')
 
     def add_inventory_category(self, inventory_id, category_id, name, parent_id):
         """
@@ -551,7 +527,7 @@ class Baselinker:
             the child is always added after the parent (you need to know the parent ID to add the child).
             For the top level category, 0 should be given as parent_id.
         """
-        return self._make_request('addInventoryCategory', inventory_id=inventory_id, category_id=category_id,
+        return self.request.make_request('addInventoryCategory', inventory_id=inventory_id, category_id=category_id,
                                   name=name, parent_id=parent_id)
 
     def delete_inventory_category(self, category_id):
@@ -563,7 +539,7 @@ class Baselinker:
         Keywords:
             category_id int: (required) The number of the category to be removed in the BaseLinker storage.
         """
-        return self._make_request('deleteInventoryCategory', category_id=category_id)
+        return self.request.make_request('deleteInventoryCategory', category_id=category_id)
 
     def get_inventory_categories(self, inventory_id):
         """
@@ -573,7 +549,7 @@ class Baselinker:
             the get_inventories method (inventory_id field).
             To retrieve categories available for all catalogs created in BaseLinker, this field should be omitted.
         """
-        return self._make_request('getInventoryCategories', inventory_id=inventory_id)
+        return self.request.make_request('getInventoryCategories', inventory_id=inventory_id)
 
     def add_inventory_manufacturer(self, manufacturer_id, name):
         """
@@ -582,7 +558,7 @@ class Baselinker:
             manufacturer_id int: (required) Manufacturer ID provided in case of an update. Should be blank when creating a new manufacturer.
             name varchar(200): (required) Manufacturer name
         """
-        return self._make_request('addInventoryManufacturer', manufacturer_id=manufacturer_id, name=name)
+        return self.request.make_request('addInventoryManufacturer', manufacturer_id=manufacturer_id, name=name)
 
     def delete_inventory_manufacturer(self, manufacturer_id):
         """
@@ -590,19 +566,19 @@ class Baselinker:
         Keywords:
             manufacturer_id int: (required) The ID of the manufacturer removed from BaseLinker warehouse.
         """
-        return self._make_request('deleteInventoryManufacturer', manufacturer_id=manufacturer_id)
+        return self.request.make_request('deleteInventoryManufacturer', manufacturer_id=manufacturer_id)
 
     def get_inventory_manufacturers(self):
         """
          The method allows you to retrieve a list of manufacturers for a BaseLinker catalog.
         """
-        return self._make_request('getInventoryManufacturers')
+        return self.request.make_request('getInventoryManufacturers')
 
     def get_inventory_extra_fields(self):
         """
          The method allows you to retrieve a list of extra fields for a BaseLinker catalog.
         """
-        return self._make_request('getInventoryExtraFields')
+        return self.request.make_request('getInventoryExtraFields')
 
     def get_inventory_integrations(self, inventory_id):
         """
@@ -613,7 +589,7 @@ class Baselinker:
             inventory_id int: (required) Catalog ID.
             The list of identifiers can be retrieved using the method get_inventories. (inventory_id field).
         """
-        return self._make_request('getInventoryIntegrations', inventory_id=inventory_id)
+        return self.request.make_request('getInventoryIntegrations', inventory_id=inventory_id)
 
     def get_inventory_available_text_field_keys(self, inventory_id):
         """
@@ -622,12 +598,12 @@ class Baselinker:
             inventory_id int: (required) Catalog ID. The list of identifiers can be retrieved
             by the get_inventories method (inventory_id field).
         """
-        return self._make_request('getInventoryAvailableTextFieldKeys', inventory_id=inventory_id)
+        return self.request.make_request('getInventoryAvailableTextFieldKeys', inventory_id=inventory_id)
 
     def add_inventory_product(self, inventory_id, product_id, parent_id, is_bundle, ean,
-                            sku, tax_rate, weight, height, width, length, star,
-                            manufacturer_id, category_id, prices, stock, locations,
-                            text_fields, images, links, bundle_products):
+                              sku, tax_rate, weight, height, width, length, star,
+                              manufacturer_id, category_id, prices, stock, locations,
+                              text_fields, images, links, bundle_products):
         """
          The method allows you to add a new product to BaseLinker catalog. Entering the product with the ID updates previously saved product.
         Keywords:
@@ -687,11 +663,11 @@ class Baselinker:
             and the value is the number of pieces of this product in the bundle.
             Subproducts can only be defined if the added/edited product is a bundle (is_bundle = true).
         """
-        return self._make_request('addInventoryProduct', inventory_id=inventory_id, product_id=product_id,
+        return self.request.make_request('addInventoryProduct', inventory_id=inventory_id, product_id=product_id,
                                   parent_id=parent_id, is_bundle=is_bundle, ean=ean,
                                   sku=sku, tax_rate=tax_rate, weight=weight, height=height,
                                   width=width, length=length, star=star, manufacturer_id=manufacturer_id
-                                  ,category_id=category_id, prices=prices, stock=stock, locations=locations,
+                                  , category_id=category_id, prices=prices, stock=stock, locations=locations,
                                   text_fields=text_fields, images=images, links=links, bundle_products=bundle_products)
 
     def delete_inventory_product(self, product_id):
@@ -700,7 +676,7 @@ class Baselinker:
         Keywords:
             product_id int: (required) BaseLinker catalogue product identifier
         """
-        return self._make_request('deleteInventoryProduct', product_id=product_id)
+        return self.request.make_request('deleteInventoryProduct', product_id=product_id)
 
     def get_inventory_products_data(self, inventory_id, products):
         """
@@ -710,7 +686,7 @@ class Baselinker:
             by the get_inventories method (inventory_id field).
             products array (required) An array of product ID numbers to download
         """
-        return self._make_request('getInventoryProductsData', inventory_id=inventory_id, products=products)
+        return self.request.make_request('getInventoryProductsData', inventory_id=inventory_id, products=products)
 
     def get_inventory_products_list(self, inventory_id, filter_id=None, filter_category_id=None,
                                     filter_ean=None, filter_sku=None, filter_name=None, filter_price_from=None,
@@ -731,7 +707,7 @@ class Baselinker:
             page int (optional) Results paging (1000 products per page for BaseLinker warehouse)
             filter_sort varchar(30) (optional) the value for sorting the product list. Possible values: "id [ASC|DESC]"
         """
-        return self._make_request('getInventoryProductsList', inventory_id=inventory_id, filter_id=filter_id,
+        return self.request.make_request('getInventoryProductsList', inventory_id=inventory_id, filter_id=filter_id,
                                   filter_category_id=filter_category_id, filter_ean=filter_ean,
                                   filter_sku=filter_sku, filter_name=filter_name, filter_price_from=filter_price_from,
                                   filter_price_to=filter_price_to, filter_stock_from=filter_stock_from,
@@ -745,7 +721,7 @@ class Baselinker:
             by the get_inventories method
             page int (optional) Results paging (1000 products per page for BaseLinker warehouse)
         """
-        return self._make_request('getInventoryProductsStock', inventory_id=inventory_id, page=page)
+        return self.request.make_request('getInventoryProductsStock', inventory_id=inventory_id, page=page)
 
     def update_inventory_products_stock(self, inventory_id, products):
         """
@@ -762,7 +738,7 @@ class Baselinker:
             Stocks cannot be assigned to the warehouses created automatically for
             purposes of keeping external stocks (shops, wholesalers, etc.).
         """
-        return self._make_request('updateInventoryProductsStock', inventory_id=inventory_id, products=products)
+        return self.request.make_request('updateInventoryProductsStock', inventory_id=inventory_id, products=products)
 
     def get_inventory_products_prices(self, inventory_id, page=None):
         """
@@ -772,7 +748,7 @@ class Baselinker:
             by the get_inventories method
             page int (optional) Results paging (1000 products per page for BaseLinker warehouse)
         """
-        return self._make_request('getInventoryProductsPrices', inventory_id=inventory_id, page=page)
+        return self.request.make_request('getInventoryProductsPrices', inventory_id=inventory_id, page=page)
 
     def update_inventory_products_prices(self, inventory_id, products):
         """
@@ -785,7 +761,7 @@ class Baselinker:
             W Liście cen kluczem powinien być identyfikator grupy cenowej, a wartością stan magazynowy dla tego magazynu.
              Listę grup cenowych mozna pobrać za pomocą metody get_inventory_price_groups.
         """
-        return self._make_request('updateInventoryProductsPrices', inventory_id=inventory_id, products=products)
+        return self.request.make_request('updateInventoryProductsPrices', inventory_id=inventory_id, products=products)
 
     def get_inventory_product_logs(self, product_id, date_from=None, date_to=None, log_type=None, sort=None, page=None):
         """
@@ -810,5 +786,5 @@ class Baselinker:
             By default the sorting is done in ascending order.
             page int (optional) Results paging (100 product editions per page).
         """
-        return self._make_request('getInventoryProductLogs', product_id=product_id, date_from=date_from,
+        return self.request.make_request('getInventoryProductLogs', product_id=product_id, date_from=date_from,
                                   date_to=date_to, log_type=log_type, sort=sort, page=page)
