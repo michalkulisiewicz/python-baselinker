@@ -23,6 +23,11 @@ class Request:
         return request_data
 
     def __get_request_headers(self):
+        """
+               Method that creates request header
+               Returns:
+                   headers(dict): Header needed for request containing api token.
+        """
         headers = {'X-BLToken': self.api_token}
         return headers
 
