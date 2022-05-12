@@ -6,7 +6,10 @@ class Request:
 
     def __init__(self, api_token):
         self.api_url = 'https://api.baselinker.com/connector.php'
+        if not api_token:
+            raise ValueError('api_key must be set! Obtain key from: https://panel.baselinker.com/other_api_token.php')
         self.api_token = api_token
+
 
     def __get_request_data(self, method_name, parameters=None):
         """

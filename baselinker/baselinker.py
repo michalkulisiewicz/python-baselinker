@@ -7,7 +7,6 @@ class Baselinker:
 
     def __init__(self, api_token):
         self.api_token = api_token
-        assert api_token != '', 'Must supply a non-empty API key.'
         self.request = Request(self.api_token)
 
     def get_orders(self, order_id=None, date_confirmed_from=None, date_from=None, id_from=None,
