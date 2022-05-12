@@ -24,14 +24,22 @@ class Request:
 
     def __get_request_headers(self):
         """
-               Method that creates request header
-               Returns:
-                   headers(dict): Header needed for request containing api token.
+        Method that creates request header
+        Returns:
+            headers(dict): Header needed for request containing api token.
         """
         headers = {'X-BLToken': self.api_token}
         return headers
 
     def make_request(self, method_name, **kwargs):
+        """
+        Method that sends request to api endpoint.
+        Keywords:
+            method_name (str): (required) Name of the method to invoke.
+            (**kwargs): (required) Parameters specified by user.
+        Returns:
+            content(json): Method returns content of the response formatted as json string.
+        """
         requests_data = self.__get_request_data(method_name, kwargs)
         headers = self.__get_request_headers()
         try:
