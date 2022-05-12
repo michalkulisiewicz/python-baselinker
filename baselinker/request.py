@@ -9,6 +9,14 @@ class Request:
         self.api_token = api_token
 
     def __get_request_data(self, method_name, parameters=None):
+        """
+        Method that creates body for request
+        Keywords:
+            method_name (str): (required) Name of the method to invoke.
+            parameters (dict): (optional) Dictionary of parameters specified by user.
+        Returns:
+            request_data(json): Data used inside body of request returned as a json string.
+        """
         request_data = {'method': method_name}
         if parameters:
             request_data['parameters'] = json.dumps(parameters)
