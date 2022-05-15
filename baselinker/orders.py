@@ -6,6 +6,17 @@ class Orders:
         self.api_token = api_token
         self.request = Request(self.api_token)
 
+    def get_journal_list(self, last_log_id, logs_types, order_id):
+        """
+            The method allows you to download a list of order events from the last 3 days.
+        Keywords:
+            last_log_id	(int): (required) Log ID number from which the logs are to be retrieved
+            logs_types (array): (required) Event ID List
+            order_id (int): (required) Order ID number
+        """
+        return self.request.make_request('getJournalList', last_log_id=last_log_id, logs_types=logs_types,
+                                         order_id=order_id)
+
     def get_orders(self, order_id=None, date_confirmed_from=None, date_from=None, id_from=None,
                    get_unconfirmed_orders=None, status_id=None, filter_email=None):
         """
