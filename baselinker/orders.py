@@ -17,6 +17,14 @@ class Orders:
         return self.request.make_request('getJournalList', last_log_id=last_log_id, logs_types=logs_types,
                                          order_id=order_id)
 
+    def get_order_extra_fields(self):
+        """
+            The method returns extra fields defined for the orders.
+            Values of those fields can be set with method set_order_fields.
+            In order to retrieve values of those fields set parameter include_custom_extra_fields in method get_orders
+        """
+        return self.request.make_request('getOrderExtraFields')
+
     def get_orders(self, order_id=None, date_confirmed_from=None, date_from=None, id_from=None,
                    get_unconfirmed_orders=None, status_id=None, filter_email=None):
         """
