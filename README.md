@@ -1,12 +1,12 @@
 <img src="https://1.bp.blogspot.com/-a4AnsxS6-XQ/Xj6aIKumFpI/AAAAAAAAAEU/HCXJkmVPcy8FwpDag5-Fw_8KKFLTrxs-QCLcBGAsYHQ/s1600/baselinker.jpg" width="400"/>
 
 A Python client library for accessing baselinker API.
-List of the methods available [here](https://www.google.com)
+List of the methods available [here](https://api.baselinker.com/)
 
 ## Installation
-Use git clone to get a library
+Use git clone to get the library
 ```
-https://github.com/michalkulisiewicz/python-baselinker.git
+git clone git@github.com:michalkulisiewicz/python-baselinker.git
 ```
 Install all requirements using pip
 ```python
@@ -25,7 +25,7 @@ API_TOKEN = 'INSERT YOUR TOKEN HERE'
 def run():
     # Create a baselinker client instance
     baselinker = Baselinker(API_TOKEN)
-    #Prints 100 orders from baselinker
+    # Prints 100 orders from baselinker
     print(baselinker.orders.get_orders())
 
     
@@ -33,8 +33,8 @@ if __name__ == '__main__':
     run()
 ```
 
-#Usage
-###Product catalog
+# Usage
+### Product catalog
 ```python
 baselinker.orders.get_orders()
 ```
@@ -61,7 +61,7 @@ baselinker.orders.get_orders()
 }
 ```
 
-###External storages
+### External storages
 ```python
 baselinker.external_storages.get_external_storages_list()
 ```
@@ -84,9 +84,9 @@ baselinker.external_storages.get_external_storages_list()
 }
 ```
 
-###Orders
+### Orders
 ```python
-baselinkerbaselinker.orders.get_orders()
+baselinker.orders.get_orders()
 ```
 **Sample response:**
 ```python
@@ -172,7 +172,7 @@ baselinkerbaselinker.orders.get_orders()
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/michalkulisiewicz/python-baselinker. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/flight_radar/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/michalkulisiewicz/python-baselinker. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/michalkulisiewicz/python-baselinker/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
