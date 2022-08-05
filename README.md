@@ -6,7 +6,7 @@ List of the methods available [here](https://api.baselinker.com/)
 ## Installation
 Use git clone to get the library
 ```
-git clone git@github.com:michalkulisiewicz/python-baselinker.git
+git clone https://github.com/michalkulisiewicz/python-baselinker.git
 ```
 Install all requirements using pip
 ```python
